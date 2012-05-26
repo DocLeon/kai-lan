@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Coypu;
+using Shouldly;
 using TechTalk.SpecFlow;
 
 namespace PageObjects.Features.step_definitions
 {
     [Binding]
-    public class PageActions_steps
+    public class PageActions_steps: PageObjectSteps
     {
         private BrowserSession _browser;
         private string _examplePageUrl;
-        private object _examplePage;
+        private Example_Page _examplePage;
 
         [Given(@"I have a browser")]
         public void CreateBrowser()
@@ -38,5 +39,22 @@ namespace PageObjects.Features.step_definitions
             _examplePage.Url.ShouldBe(_examplePageUrl);
         }
 
+    }
+
+    public class Example_Page: PageObject
+    {
+        public string Url { get; set; }
+    }
+
+    public class PageObjectSteps
+    {
+        protected void on_page<T>(Action<T> action) where T : PageObject
+        {
+              
+        }
+    }
+
+    public class PageObject
+    {
     }
 }
